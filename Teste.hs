@@ -1,18 +1,47 @@
 module Teste where
 
+-- Por convenção se usar CamelCase para os nomes de funções
 maiorQue :: Int -> Int -> Bool
 maiorQue x y = x > y
 
 menorQue :: Int -> Int -> Bool
 menorQue a b = (<) a b
 
-u :: Int
-u = 7
-
--- head, tail e last são chamadas funções parciais, pois não são definidas para todo tipo de lista (ex.: lista vazia)
-
 somaNumeros :: Int -> Int -> Int -> Int
 somaNumeros a b c = a + b + c
+
+-- o sinal = aqui significa definição, e não atribuição. u é uma função, e não uma consante ou menos ainda, variável.
+u :: Int
+u = 7
+-- a linha abaixo provocaria um erro de ambiguidade
+-- u = 6
+
+-- head, tail e last são chamadas funções parciais, pois não são definidas para todo tipo de lista (ex.: lista vazia)
+head [1,2,3,4]
+-- => 1
+tail [1,2,3,4]
+-- => [2,3,4]
+last [1,2,3,4]
+-- => 4
+-- Strings são listas de caracteres
+head "HASKELL"
+-- => 'H'
+
+-- Podemos concatenar um lista na outra com
+[1,2] ++ [3,4]
+-- => [1,2,3,4]
+-- De maneira infixa
+(++) [1,2] [3,4]
+-- => [1,2,3,4]
+(++) [] [1,2]
+-- => [1,2]
+(++) [1,2] []
+-- => [1,2]
+[True, False] ++ [True]
+-- [True, False, True]
+-- Uma string é uma lista de caracteres, ou seja, [Char]
+"ABCD" ++ "EFG"
+-- "ABCDEFG"
 
 -- [x * 2 | x <- [1,2,3,4,5,6,7,8,9], x /=4]
 dobroLista :: [Int] -> [Int]
@@ -41,6 +70,9 @@ letras :: [[Char]]
 letras = [head "ABB" : x : tail "ABB" | x<-['a' ..'g']]
 
 -- [5,8,11,17,20,26,29,32,38,41]
+-- 5+3=8 8+3=11 11+3+3=17 17+3=20 20+3+3=26 26+3=29 29+3=32 32+3+3=38 38+3=41
+coisa :: [Int]
+coisa = [x | x<-[1 .. 41], x `mod` 3 == 2, x > 3]
 
 -- [1.0,0.5,0.25,0.125,0.0625,0.03125]
 
