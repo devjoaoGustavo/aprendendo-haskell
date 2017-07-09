@@ -1,4 +1,4 @@
-module Teste where
+module Expressoes where
 
 -- Por convenção se usar CamelCase para os nomes de funções
 maiorQue :: Int -> Int -> Bool
@@ -23,35 +23,131 @@ tail [1,2,3,4]
 -- => [2,3,4]
 last [1,2,3,4]
 -- => 4
+-- As linhas abaixo provocará um erro
+-- head []
+-- tail []
+-- last []
+
 -- Strings são listas de caracteres
 head "HASKELL"
 -- => 'H'
+--
+-- reverse
+reverse "HASKELL"
+-- "LLEKSAH"
+reverse [1,2,3,4]
+-- [4,3,2,1]
+reverse []
+-- []
+
+-- A função last, pode ser obtida a partir das funções head e reverse
+( head . reverse ) "HASKELL"
+-- 'L'
+last "HASKELL"
+-- 'l'
 
 -- Podemos concatenar um lista na outra com
 [1,2] ++ [3,4]
 -- => [1,2,3,4]
+
 -- De maneira infixa
 (++) [1,2] [3,4]
 -- => [1,2,3,4]
+
 (++) [] [1,2]
 -- => [1,2]
+
 (++) [1,2] []
 -- => [1,2]
+
 [True, False] ++ [True]
 -- [True, False, True]
+
 -- Uma string é uma lista de caracteres, ou seja, [Char]
 "ABCD" ++ "EFG"
 -- "ABCDEFG"
 
--- [x * 2 | x <- [1,2,3,4,5,6,7,8,9], x /=4]
+-- Recuperar um elemento em um posição determinada
+[1,2,3,4] !! 2
+-- 3
+[1,2,3,4] !! 0
+-- 1
+
+-- As linhas abaixo provocarão erro
+-- [1,2,3,4] !! (-2) -- índice negativo
+-- [] !! 2 -- índice grande demais para a lista dada
+
+-- Adicionar um elemento no início da lista
+
+3 : [1,2,4]
+-- [3,1,2,4]
+
+'A' : "MEIXA"
+-- "AMEIXA"
+
+2 : []
+-- [2]
+
+'A' : []
+-- "A"
+
+-- Adicionando elementos sucessivamente
+
+5 : 4 : [3,2,1]
+-- [5,4,3,2,1]
+
+'A' : 'M' : 'E' : "IXA"
+--"AMEIXA"
+
+-- Descrobrindo o tamanho de uma lista
+
+length [1,2,3]
+-- 3
+
+length ['a']
+-- 1
+
+length "a"
+-- 1
+
+length []
+-- 0
+
+length ""
+-- 0
+
+-- Compressão de listas
+
+[ elem + 1 | elem <- [1,2,3,4,5], elem > 5 ]
+-- [2,3,4,5]
+
+[x * 2 | x <- [1,2,3,4,5,6,7,8,9], x /=4]
+-- [2,4,6,10,12,14,16,18]
+
 dobroLista :: [Int] -> [Int]
-dobroLista xs = [2*x | x<-xs]
+dobroLista xs = [2 * x | x <- xs]
 
 lista :: [Int]
-lista = [2*x+1 | x<-[0 .. 10], x/=5]
+lista = [ 2 * x + 1 | x <- [0 .. 10], x /= 5 ]
+-- [1,3,5,7,9,13,15,17,19,21]
+
+
+-- Tuplas
+-- Tuplas são imutáveis
+
+-- :t ('A',"ALO")
+-- ('A',"ALO") :: (Char,[Char])
 
 foo :: Char -> Int ->(Int, String)
 foo x y = (y+9, x:[x])
+
+foo 'E' 2
+-- (11, "EE")
+
+fst (1,2)
+-- 1
+snd (1,2)
+-- 2
 
 -- Lista de exercícios do capítulo 1 do Livro de Haskell da casa do código
 --
@@ -75,24 +171,36 @@ coisa :: [Int]
 coisa = [x | x<-[1 .. 41], x `mod` 3 == 2, x > 3]
 
 -- [1.0,0.5,0.25,0.125,0.0625,0.03125]
+quinto = [x**(-x)|x<-[0..5]]
 
 -- [1,10,19,28,37,46,55,64]
 
 -- [2,4,8,10,12,16,18,22,24,28,30]
 
--- [2,4,8,10,12,16,18,22,24,28,30]
+-- ['@','A','C','D','E','G','J','l']
 
 -- Crie uma função que verifique se o tamanho de uma String é par ou não. Use Bool como retorno.
+stringPar :: [Char] -> Bool
+stringPar str = length str `mod` == 0
 
 -- Escreva uma função que receba um vetor de Strings e retorne uma lista com todos os elementos em ordem reversa
+reverseStr :: [[Char]] -> [[Char]]
+reverseStr strList = [reverse str | str<-strList]]
 
--- Escreva uma função que receba um vetor de Strings e retorne uma lista com o tamanho de cada String. As palavras de tamanho par devem ser exlcluídas da resposta.
+-- Escreva uma função que receba um vetor de Strings e retorne uma lista com o tamanho de cada String. As palavras de tamanho par devem ser excluídas da resposta.
+strLength :: [[Char]] -> [Int]
+strLength strList = [length str | str<-strList, length str `mod` /= 0]
 
 -- Escreva a função head como composição de duas outras.
+anotherHead x = ( last . reverse ) x
 
 -- Faça uma função que receba uma String e retorne True se esta for um palíndromo; caso contrário False.
+palindromo :: [Char] -> Bool
+palindromo str = str == reverse str
 
 -- Faça uma função que receba um inteiro e retorne uma tupla, contendo: o dobro deste número na primeira coordenada, o triplo na segunda, o quádrulo na terceira e o quíntuplo na quarta.
+tups :: Int -> (Int,Int,Int,Int)
+tups x = (x*2,x*3,x*4,x*5)
 
 
 
