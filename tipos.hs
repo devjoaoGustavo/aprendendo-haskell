@@ -60,3 +60,15 @@ trem (Dado x) = 3
 
 treco :: Dado1 -> Int
 treco (Dado1 x) = 3
+
+newtype Natural = MakeNatural Int
+toNatural :: Int -> Natural
+toNatural x | x < 0 = error "Não é possível criar um número natural negativo"
+            | x == 0 = error " Não quero número natural igual a zero"
+            | otherwise = MakeNatural x
+
+showNatural :: Natural -> Int
+showNatural (MakeNatural x) = x
+
+fromNatural :: Natural -> Int
+fromNatural (MakeNatural x) = x
