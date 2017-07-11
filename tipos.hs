@@ -61,14 +61,36 @@ trem (Dado x) = 3
 treco :: Dado1 -> Int
 treco (Dado1 x) = 3
 
+{- No ghci
+ - Newtype se comporta como lazy.
+ - A função abaixo showNatural não estoura erro, mesmo que o número seja negativo,
+ - isso porque x nunca é usado
+ - -}
 newtype Natural = MakeNatural Int
 toNatural :: Int -> Natural
 toNatural x | x < 0 = error "Não é possível criar um número natural negativo"
-            | x == 0 = error " Não quero número natural igual a zero"
             | otherwise = MakeNatural x
 
 showNatural :: Natural -> Int
-showNatural (MakeNatural x) = x
+showNatural (MakeNatural x) =
+  if 2 >= 2 then
+    3
+  else
+    x
 
-fromNatural :: Natural -> Int
-fromNatural (MakeNatural x) = x
+{- No ghci
+ - Data se comporta como se não fosse lazy.
+ - A função abaixo showOdd vai estourar o erro caso o o número seja par,
+ - mesmo que x nunca seja usado
+ - -}
+data Odd = MakeOdd Int
+toOdd :: Int -> Odd
+toOdd x | (x `mod` 2 == 0) = error "Este número não é ímpar"
+                  | otherwise = MakeOdd x
+
+showOdd :: Odd -> Int
+showOdd (MakeOdd x) =
+  if 1 < 0 then
+    x
+  else
+    2 * 3
