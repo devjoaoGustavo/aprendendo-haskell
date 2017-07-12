@@ -94,3 +94,44 @@ showOdd (MakeOdd x) =
     x
   else
     2 * 3
+
+data MeuTipo = MeuTipo Int
+newtype OutroTipo = OutroTipo Int
+
+showTipo :: MeuTipo -> Int
+showTipo (MeuTipo x) = if True then 3 else x
+
+showOutro :: OutroTipo -> Int
+showOutro (OutroTipo x) = if True then 3 else x
+
+--Record Syntax
+data Ponto = Ponto {xval, yval :: Double}
+
+xpto = Ponto 2 3
+
+-- Ganhamos tbm funções de projeção
+
+-- :t xval
+-- xval :: Ponto -> Double
+-- xval xpto
+-- 2.0
+
+-- :t yval
+-- yval :: Ponto -> Double
+-- yval xpto
+-- 3.0
+
+-- 3 formas de se calcular a distância do ponto de origem
+distOrig :: Ponto -> Double
+distOrig (Ponto x y) = sqrt(x ** 2 + y ** 2)
+
+calcDist :: Ponto -> Double
+calcDist (Ponto {xval=x, yval=y}) =
+  sqrt(x ** 2 + y ** 2)
+
+distancia :: Ponto -> Double
+distancia p = sqrt(xval p ** 2 + yval p ** 2)
+
+
+
+
